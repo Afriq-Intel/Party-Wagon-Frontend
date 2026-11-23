@@ -189,6 +189,7 @@ export const FOOTER_GROUPS = [
     links: [
       { label: "About Us", href: "/about" },
       { label: "Good Times Start Here", href: "/about" },
+      { label: "Become a Partner", href: "/partners/apply" },
     ],
   },
 ] as const;

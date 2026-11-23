@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# macOS metadata
+._*
+
+# Temporary design debug files
+design-references/_crop-debug/
+design-references/_hero-debug/
+design-references/_figma-layout/

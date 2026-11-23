@@ -39,7 +39,7 @@ export function BestSellersSection() {
 
         <p className="mt-6 font-outfit text-xs text-midnight-party/50">
           Product details shown here are temporary demo content for visual
-          development only — not live catalogue data.
+          development only, not live catalogue data.
         </p>
       </div>
     </section>

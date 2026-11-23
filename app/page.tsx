@@ -7,6 +7,7 @@ import { CategorySection } from "@/components/home/CategorySection";
 import { HeroSection } from "@/components/home/HeroSection";
 import { MessageTicker } from "@/components/home/MessageTicker";
 import { PartyPlannerBanner } from "@/components/home/PartyPlannerBanner";
+import { PartnerBanner } from "@/components/home/PartnerBanner";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 
 export default function HomePage() {
@@ -24,6 +25,7 @@ export default function HomePage() {
         <AboutSection />
         <PartyPlannerBanner />
         <TestimonialsSection />
+        <PartnerBanner />
       </main>
       <Footer />
     </>

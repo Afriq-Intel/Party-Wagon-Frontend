@@ -370,11 +370,11 @@
 .age-gate__title {
   margin: 0;
   color: var(--age-outline);
-  font-family: var(--font-age-serif), "Times New Roman", serif;
+  font-family: var(--font-oswald), Impact, sans-serif;
   font-size: clamp(1.85rem, 6.5vw, 2.5rem);
   font-weight: 700;
-  letter-spacing: -0.04em;
-  line-height: 0.9;
+  letter-spacing: 0.02em;
+  line-height: 0.95;
   text-align: center;
   text-transform: uppercase;
   white-space: pre-wrap;
@@ -412,7 +412,7 @@
   border-radius: 10rem;
   background-color: var(--age-cream);
   padding: 0.7rem 1.1rem;
-  color: var(--age-orange);
+  color: var(--midnight-party);
   font-family: var(--font-outfit), system-ui, sans-serif;
   font-size: 0.875rem;
   font-weight: 700;
@@ -512,8 +512,8 @@
 
   .age-gate__title {
     font-size: clamp(2.75rem, 3.6vw, 3.25rem);
-    letter-spacing: -0.04em;
-    line-height: 0.9;
+    letter-spacing: 0.02em;
+    line-height: 0.95;
   }
 
   .age-gate__copy {
@@ -740,6 +740,8 @@
 }
 
 .login-shell__input {
+  position: relative;
+  z-index: 0;
   width: 100%;
   border: 1px solid #d8d2d6;
   border-radius: 0.5rem;
@@ -774,13 +776,15 @@
 .login-shell__label {
   pointer-events: none;
   position: absolute;
+  z-index: 1;
   top: 50%;
   left: 0.75rem;
   transform: translateY(-50%);
-  background: #fff;
+  background-color: #fff;
   padding: 0 0.25rem;
   font-family: var(--font-outfit), sans-serif;
   font-size: 0.9375rem;
+  line-height: 1;
   color: #8b8490;
   transition:
     top 0.15s ease,
@@ -789,12 +793,15 @@
     color 0.15s ease;
 }
 
+/* Sit on the top border so the label never overlaps typed text. */
 .login-shell__input:focus + .login-shell__label,
-.login-shell__input:not(:placeholder-shown) + .login-shell__label {
+.login-shell__input:not(:placeholder-shown) + .login-shell__label,
+.login-shell__input:-webkit-autofill + .login-shell__label {
   top: 0;
-  transform: translateY(0);
+  transform: translateY(-50%);
   font-size: 0.6875rem;
   font-weight: 500;
+  padding: 0 0.35rem;
 }
 
 .login-shell__input:focus + .login-shell__label {

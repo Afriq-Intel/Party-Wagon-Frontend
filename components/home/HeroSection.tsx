@@ -22,7 +22,7 @@ export function HeroSection() {
       <div className="relative w-full overflow-hidden">
         <Image
           src="/assets/banners/hero-banner.jpg"
-          alt="You meet a girl at the party — she says take me home. Friends celebrating at a lively party."
+          alt="You meet a girl at the party: she says take me home. Friends celebrating at a lively party."
           width={1440}
           height={820}
           priority
