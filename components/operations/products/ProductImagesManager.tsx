@@ -194,7 +194,7 @@ export function ProductImagesManager({
           <p className="mb-2 font-outfit text-[11px] font-semibold uppercase tracking-wide text-midnight-party/45">
             Mock catalogue images
           </p>
-          <div className="grid grid-cols-4 gap-2 sm:grid-cols-6 md:grid-cols-8">
+          <div className="grid grid-cols-3 gap-2 sm:grid-cols-5 md:grid-cols-8">
             {MOCK_PRODUCT_IMAGE_POOL.map((url) => {
               const alreadyAdded = images.some((image) => image.url === url);
               return (

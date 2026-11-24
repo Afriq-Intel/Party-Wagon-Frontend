@@ -24,14 +24,14 @@ export function CategorySection() {
     >
       <div className="mx-auto max-w-7xl">
         <Reveal>
-          <div className="mb-8 flex items-start justify-between gap-4">
+          <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <h2
               id="categories-heading"
-              className="font-oswald text-3xl font-bold text-midnight-party sm:text-4xl"
+              className="max-w-[16ch] font-oswald text-3xl font-bold text-midnight-party sm:max-w-none sm:text-4xl"
             >
               Shop by products or services
             </h2>
-            <div className="flex shrink-0 items-center gap-2 pt-1">
+            <div className="flex shrink-0 items-center gap-2 self-end pt-0 sm:self-auto sm:pt-1">
               <button
                 type="button"
                 onClick={() => scrollByCard("prev")}

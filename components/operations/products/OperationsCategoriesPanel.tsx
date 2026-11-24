@@ -393,8 +393,8 @@ export function OperationsCategoriesPanel({
           </div>
         ) : (
           <>
-            <div className="overflow-x-auto">
-              <table className="min-w-[920px] w-full border-collapse text-left">
+            <div className="hidden overflow-x-auto lg:block">
+              <table className="min-w-full w-full border-collapse text-left">
                 <thead>
                   <tr className="border-b border-black/5 bg-[#fbf8fa]">
                     {[
@@ -494,6 +494,73 @@ export function OperationsCategoriesPanel({
                 </tbody>
               </table>
             </div>
+
+            <ul className="divide-y divide-black/5 lg:hidden">
+              {paged.items.map((category) => {
+                const productCount = getCategoryProductCount(category.name);
+                return (
+                  <li key={category.id} className="p-4">
+                    <div className="flex items-start gap-3">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setDialog({
+                            type: "view",
+                            categoryId: category.id,
+                          })
+                        }
+                        className="flex min-w-0 flex-1 items-start gap-3 text-left"
+                      >
+                        <span className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-offwhite">
+                          <ProductImageThumb src={category.image} size={56} />
+                        </span>
+                        <span className="min-w-0">
+                          <span className="block font-outfit text-[14px] font-semibold text-midnight-party">
+                            {category.name}
+                          </span>
+                          <span className="mt-1 line-clamp-2 block font-outfit text-[12.5px] text-midnight-party/60">
+                            {category.description}
+                          </span>
+                          <span className="mt-2 flex flex-wrap items-center gap-2">
+                            <CategoryStatusBadge status={category.status} />
+                            <span className="font-outfit text-[12px] text-midnight-party/50">
+                              {productCount} products
+                            </span>
+                          </span>
+                        </span>
+                      </button>
+                      <CategoryActionsMenu
+                        category={category}
+                        onView={() =>
+                          setDialog({
+                            type: "view",
+                            categoryId: category.id,
+                          })
+                        }
+                        onEdit={() =>
+                          setDialog({
+                            type: "edit",
+                            categoryId: category.id,
+                          })
+                        }
+                        onChangeStatus={() =>
+                          setDialog({
+                            type: "status",
+                            categoryId: category.id,
+                          })
+                        }
+                        onDelete={() =>
+                          setDialog({
+                            type: "delete",
+                            categoryId: category.id,
+                          })
+                        }
+                      />
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
 
             <div className="flex flex-col gap-3 border-t border-black/5 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-5">
               <p className="font-outfit text-[12.5px] text-midnight-party/55">

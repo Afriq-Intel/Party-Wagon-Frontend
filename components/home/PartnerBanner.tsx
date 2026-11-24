@@ -29,7 +29,7 @@ export function PartnerBanner() {
 
           <h2
             id="partner-banner-heading"
-            className="font-oswald text-5xl font-bold uppercase leading-none text-lemon-twist sm:text-6xl lg:text-7xl"
+            className="font-oswald text-[clamp(2.5rem,11vw,4.5rem)] font-bold uppercase leading-none text-lemon-twist sm:text-6xl lg:text-7xl"
           >
             Become a Partner
           </h2>

@@ -15,7 +15,7 @@ const CLOUDS = [
     objectPosition: "center 32%",
     priority: true,
     className:
-      "left-0 top-0 z-10 w-[52%] sm:w-[42%] lg:w-[30%]",
+      "left-0 top-0 z-10 w-[48%] sm:w-[42%] lg:w-[30%]",
     tilt: "-3deg",
     lift: "-12px",
     scale: "1.05",
@@ -31,7 +31,7 @@ const CLOUDS = [
     objectPosition: "center 28%",
     priority: false,
     className:
-      "right-0 top-[8%] z-20 w-[40%] sm:right-auto sm:left-[56%] sm:top-[6%] sm:w-[32%] lg:left-[34%] lg:top-[12%] lg:w-[18%]",
+      "right-0 top-[6%] z-20 w-[36%] sm:right-auto sm:left-[56%] sm:top-[6%] sm:w-[32%] lg:left-[34%] lg:top-[12%] lg:w-[18%]",
     tilt: "3.2deg",
     lift: "-9px",
     scale: "1.06",
@@ -47,7 +47,7 @@ const CLOUDS = [
     objectPosition: "center 42%",
     priority: false,
     className:
-      "left-[10%] top-[46%] z-30 w-[76%] sm:left-[14%] sm:top-[44%] sm:w-[64%] lg:left-[6%] lg:top-[36%] lg:w-[48%]",
+      "left-[8%] top-[42%] z-30 w-[72%] sm:left-[14%] sm:top-[44%] sm:w-[64%] lg:left-[6%] lg:top-[36%] lg:w-[48%]",
     tilt: "-1.6deg",
     lift: "-14px",
     scale: "1.035",
@@ -121,7 +121,7 @@ export function AboutCloudStage() {
       </h2>
 
       <div className="relative mt-3 sm:mt-4">
-        <div className="relative h-[520px] sm:h-[600px] lg:h-[760px] xl:h-[820px]">
+        <div className="relative h-[380px] sm:h-[560px] lg:h-[760px] xl:h-[820px]">
           {CLOUDS.map((cloud) => (
             <div
               key={cloud.src}

@@ -292,8 +292,8 @@ export function OperationsPartnerDirectoryPage() {
           </div>
         ) : (
           <>
-            <div className="overflow-x-auto">
-              <table className="min-w-[1100px] w-full border-collapse text-left">
+            <div className="hidden overflow-x-auto lg:block">
+              <table className="min-w-full w-full border-collapse text-left">
                 <thead>
                   <tr className="border-b border-black/5 bg-[#fbf8fa]">
                     {[
@@ -370,6 +370,41 @@ export function OperationsPartnerDirectoryPage() {
                 </tbody>
               </table>
             </div>
+
+            <ul className="divide-y divide-black/5 lg:hidden">
+              {paged.items.map((partner) => (
+                <li key={partner.id} className="p-4">
+                  <p className="font-outfit text-[14px] font-semibold text-midnight-party">
+                    {partner.businessName}
+                  </p>
+                  <p className="mt-0.5 font-outfit text-[12px] text-midnight-party/50">
+                    {partner.contactName} · {partner.partnerId}
+                  </p>
+                  <p className="mt-2 font-outfit text-[12.5px] text-midnight-party/70">
+                    {partnerCapabilityLabel(partner.capability)}
+                  </p>
+                  <p className="mt-1 font-outfit text-[12px] text-midnight-party/55">
+                    {partner.email}
+                    <span className="mx-1 text-midnight-party/30">·</span>
+                    {partner.phone}
+                  </p>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    <PartnerVerificationStatusBadge
+                      status={partner.verificationStatus}
+                    />
+                    <PartnerAccountStatusBadge status={partner.accountStatus} />
+                  </div>
+                  <div className="mt-2 flex flex-wrap items-center gap-2">
+                    <PartnerCredentialsDeliveryBadge
+                      status={partner.credentialsDeliveryStatus}
+                    />
+                    <span className="font-outfit text-[11px] text-midnight-party/40">
+                      Approved {formatPartnerDirectoryDate(partner.approvedAt)}
+                    </span>
+                  </div>
+                </li>
+              ))}
+            </ul>
 
             <div className="flex flex-col gap-3 border-t border-black/5 px-4 py-3.5 sm:flex-row sm:items-center sm:justify-between sm:px-5">
               <p className="font-outfit text-[12.5px] text-midnight-party/55">

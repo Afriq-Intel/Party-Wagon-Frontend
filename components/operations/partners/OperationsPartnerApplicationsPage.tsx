@@ -257,8 +257,8 @@ export function OperationsPartnerApplicationsPage() {
           </div>
         ) : (
           <>
-            <div className="overflow-x-auto">
-              <table className="min-w-[920px] w-full border-collapse text-left">
+            <div className="hidden overflow-x-auto lg:block">
+              <table className="min-w-full w-full border-collapse text-left">
                 <thead>
                   <tr className="border-b border-black/5 bg-[#fbf8fa]">
                     {[
@@ -339,6 +339,48 @@ export function OperationsPartnerApplicationsPage() {
                 </tbody>
               </table>
             </div>
+
+            <ul className="divide-y divide-black/5 lg:hidden">
+              {paged.items.map((application) => (
+                <li key={application.id} className="p-4">
+                  <div className="flex items-start gap-3">
+                    <Link
+                      href={`/operations/partners/applications/${application.id}`}
+                      className="min-w-0 flex-1"
+                    >
+                      <p className="font-outfit text-[14px] font-semibold text-midnight-party">
+                        {application.businessName}
+                      </p>
+                      <p className="mt-0.5 font-outfit text-[11.5px] text-midnight-party/45">
+                        {application.referenceId}
+                      </p>
+                      <p className="mt-2 font-outfit text-[12.5px] text-midnight-party/70">
+                        {application.contactName} · {application.email}
+                      </p>
+                      <p className="mt-1 font-outfit text-[12px] text-midnight-party/50">
+                        {partnerCapabilityLabel(application.capability)} ·{" "}
+                        {formatPartnerApplicationDate(application.submittedAt)}
+                      </p>
+                      <div className="mt-2">
+                        <PartnerApplicationStatusBadge
+                          status={application.status}
+                        />
+                      </div>
+                    </Link>
+                    <Link
+                      href={`/operations/partners/applications/${application.id}`}
+                      className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-midnight-party/10 text-midnight-party transition hover:border-lilac-luster/40 hover:text-lilac-luster"
+                      title="Review application"
+                    >
+                      <Eye size={15} aria-hidden="true" />
+                      <span className="sr-only">
+                        Review {application.businessName}
+                      </span>
+                    </Link>
+                  </div>
+                </li>
+              ))}
+            </ul>
 
             <div className="flex flex-col gap-3 border-t border-black/5 px-4 py-3.5 sm:flex-row sm:items-center sm:justify-between sm:px-5">
               <p className="font-outfit text-[12.5px] text-midnight-party/55">

@@ -28,7 +28,15 @@ export type CartLine = {
 type CartContextValue = {
   items: CartLine[];
   itemCount: number;
+  /** False until localStorage cart has been read on the client. */
+  hydrated: boolean;
   addItem: (item: Omit<CartLine, "quantity">, quantity?: number) => void;
+  /** Set line quantity; quantity below 1 removes the line. */
+  setQuantity: (
+    productId: string,
+    variantId: string,
+    quantity: number,
+  ) => void;
   removeItem: (productId: string, variantId?: string) => void;
   clearCart: () => void;
   /** Line key (`productId::variantId`) of the most recently added item. */
@@ -51,9 +59,21 @@ function isCartLine(value: unknown): value is CartLine {
     typeof line.name === "string" &&
     typeof line.image === "string" &&
     typeof line.priceGhs === "number" &&
+    Number.isFinite(line.priceGhs) &&
+    line.priceGhs >= 0 &&
     typeof line.priceLabel === "string" &&
-    typeof line.quantity === "number"
+    typeof line.quantity === "number" &&
+    Number.isFinite(line.quantity) &&
+    line.quantity >= 1
   );
+}
+
+function sanitizeCartLines(lines: CartLine[]): CartLine[] {
+  return lines.map((line) => ({
+    ...line,
+    priceGhs: Math.max(0, line.priceGhs),
+    quantity: Math.max(1, Math.floor(line.quantity)),
+  }));
 }
 
 function readStoredCart(): CartLine[] {
@@ -63,7 +83,7 @@ function readStoredCart(): CartLine[] {
     if (!raw) return [];
     const parsed = JSON.parse(raw) as unknown;
     if (!Array.isArray(parsed)) return [];
-    return parsed.filter(isCartLine);
+    return sanitizeCartLines(parsed.filter(isCartLine));
   } catch {
     return [];
   }
@@ -86,6 +106,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const addItem = useCallback(
     (item: Omit<CartLine, "quantity">, quantity = 1) => {
+      const qty = Math.max(1, Math.floor(quantity));
       const key = cartLineKey(item.productId, item.variantId);
       setItems((prev) => {
         const existing = prev.find(
@@ -97,16 +118,46 @@ export function CartProvider({ children }: { children: ReactNode }) {
           return prev.map((line) =>
             line.productId === item.productId &&
             line.variantId === item.variantId
-              ? { ...line, quantity: line.quantity + quantity }
+              ? { ...line, quantity: line.quantity + qty }
               : line,
           );
         }
-        return [...prev, { ...item, quantity }];
+        return [
+          ...prev,
+          {
+            ...item,
+            priceGhs: Math.max(0, item.priceGhs),
+            quantity: qty,
+          },
+        ];
       });
       setRecentlyAddedId(key);
       window.setTimeout(() => {
         setRecentlyAddedId((current) => (current === key ? null : current));
       }, 1600);
+    },
+    [],
+  );
+
+  const setQuantity = useCallback(
+    (productId: string, variantId: string, quantity: number) => {
+      const next = Math.floor(quantity);
+      if (!Number.isFinite(next) || next < 1) {
+        setItems((prev) =>
+          prev.filter(
+            (line) =>
+              !(line.productId === productId && line.variantId === variantId),
+          ),
+        );
+        return;
+      }
+      setItems((prev) =>
+        prev.map((line) =>
+          line.productId === productId && line.variantId === variantId
+            ? { ...line, quantity: next }
+            : line,
+        ),
+      );
     },
     [],
   );
@@ -132,12 +183,23 @@ export function CartProvider({ children }: { children: ReactNode }) {
     () => ({
       items,
       itemCount,
+      hydrated,
       addItem,
+      setQuantity,
       removeItem,
       clearCart,
       recentlyAddedId,
     }),
-    [items, itemCount, addItem, removeItem, clearCart, recentlyAddedId],
+    [
+      items,
+      itemCount,
+      hydrated,
+      addItem,
+      setQuantity,
+      removeItem,
+      clearCart,
+      recentlyAddedId,
+    ],
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

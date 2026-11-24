@@ -103,7 +103,13 @@ function HeaderChrome() {
         </div>
       </div>
 
-      <div className="border-t border-white/15 px-4 py-3 md:hidden">
+      <div
+        className={`border-t border-white/15 px-4 transition-[padding,opacity,max-height] duration-300 ease-out md:hidden ${
+          scrolled && !mobileOpen
+            ? "max-h-0 overflow-hidden border-t-0 py-0 opacity-0"
+            : "max-h-20 py-3 opacity-100"
+        }`}
+      >
         <GlobalSearch
           id="mobile-search"
           query={query}
@@ -124,7 +130,7 @@ function HeaderChrome() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="block rounded-lg px-2 py-2 font-outfit text-base font-medium uppercase tracking-wide hover:bg-white/10"
+                  className="block rounded-lg px-2 py-2.5 font-outfit text-base font-medium uppercase tracking-wide hover:bg-white/10"
                   onClick={() => setMobileOpen(false)}
                 >
                   {link.label}

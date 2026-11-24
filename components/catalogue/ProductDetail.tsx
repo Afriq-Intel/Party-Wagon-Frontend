@@ -100,7 +100,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
             <span className="mx-2 text-midnight-party/25">·</span>
             {product.categoryName}
           </p>
-          <h1 className="mt-3 font-oswald text-4xl font-bold uppercase leading-tight tracking-wide text-midnight-party sm:text-5xl">
+          <h1 className="mt-3 font-oswald text-[clamp(2rem,8vw,3rem)] font-bold uppercase leading-tight tracking-wide text-midnight-party sm:text-5xl">
             {product.name}
           </h1>
 

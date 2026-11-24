@@ -1,7 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import type { CatalogueFilters, CatalogueSortOption } from "@/types/catalogue";
-import { Search, SlidersHorizontal } from "lucide-react";
+import { ChevronDown, Search, SlidersHorizontal } from "lucide-react";
 
 type CatalogueFiltersProps = {
   filters: CatalogueFilters;
@@ -27,6 +28,7 @@ export function CatalogueFiltersBar({
   onChange,
   onReset,
 }: CatalogueFiltersProps) {
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const hasActiveFilters =
     Boolean(filters.query.trim()) ||
     Boolean(filters.category) ||
@@ -53,26 +55,62 @@ export function CatalogueFiltersBar({
         </p>
       </div>
 
-      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6">
-        <div className="relative xl:col-span-2">
-          <label htmlFor="catalogue-search" className="sr-only">
-            Search products by name
-          </label>
-          <Search
-            size={16}
-            className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-midnight-party/45"
+      <div className="relative">
+        <label htmlFor="catalogue-search" className="sr-only">
+          Search products by name
+        </label>
+        <Search
+          size={16}
+          className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-midnight-party/45"
+          aria-hidden="true"
+        />
+        <input
+          id="catalogue-search"
+          type="search"
+          value={filters.query}
+          onChange={(event) => onChange({ query: event.target.value })}
+          placeholder="Search by name, brand…"
+          className="w-full rounded-xl border border-black/10 bg-[#faf7f9] py-2.5 pl-10 pr-3 font-outfit text-sm text-midnight-party placeholder:text-midnight-party/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac-luster"
+        />
+      </div>
+
+      <div className="mt-3 flex items-center justify-between gap-3 md:hidden">
+        <button
+          type="button"
+          aria-expanded={filtersOpen}
+          aria-controls="catalogue-filter-panel"
+          onClick={() => setFiltersOpen((open) => !open)}
+          className="inline-flex items-center gap-2 rounded-full border border-midnight-party/15 px-3.5 py-2 font-outfit text-xs font-semibold uppercase tracking-wide text-midnight-party transition hover:border-lilac-luster/40 hover:text-lilac-luster focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac-luster"
+        >
+          Filters
+          {hasActiveFilters ? (
+            <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-lilac-luster px-1.5 text-[10px] text-white">
+              !
+            </span>
+          ) : null}
+          <ChevronDown
+            size={14}
+            className={`transition ${filtersOpen ? "rotate-180" : ""}`}
             aria-hidden="true"
           />
-          <input
-            id="catalogue-search"
-            type="search"
-            value={filters.query}
-            onChange={(event) => onChange({ query: event.target.value })}
-            placeholder="Search by name, brand…"
-            className="w-full rounded-xl border border-black/10 bg-[#faf7f9] py-2.5 pl-10 pr-3 font-outfit text-sm text-midnight-party placeholder:text-midnight-party/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac-luster"
-          />
-        </div>
+        </button>
+        {hasActiveFilters ? (
+          <button
+            type="button"
+            onClick={onReset}
+            className="font-outfit text-sm font-semibold text-lilac-luster underline-offset-4 transition hover:text-midnight-party hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac-luster"
+          >
+            Reset
+          </button>
+        ) : null}
+      </div>
 
+      <div
+        id="catalogue-filter-panel"
+        className={`grid gap-3 md:mt-3 md:grid-cols-2 md:grid-rows-1 xl:grid-cols-5 ${
+          filtersOpen ? "mt-3 grid" : "hidden md:grid"
+        }`}
+      >
         <div>
           <label htmlFor="catalogue-brand" className="sr-only">
             Filter by brand
@@ -142,7 +180,7 @@ export function CatalogueFiltersBar({
           />
         </div>
 
-        <div>
+        <div className="md:col-span-2 xl:col-span-2">
           <label htmlFor="catalogue-sort" className="sr-only">
             Sort products
           </label>
@@ -164,7 +202,7 @@ export function CatalogueFiltersBar({
       </div>
 
       {hasActiveFilters ? (
-        <div className="mt-4 flex justify-end">
+        <div className="mt-4 hidden justify-end md:flex">
           <button
             type="button"
             onClick={onReset}

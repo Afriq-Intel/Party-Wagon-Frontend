@@ -5,6 +5,7 @@ import { Outfit } from "next/font/google";
 import { AgeVerification } from "@/components/age-gate/AgeVerification";
 import { AuthProvider } from "@/lib/auth/auth-context";
 import { CartProvider } from "@/lib/cart/cart-context";
+import { CheckoutSessionProvider } from "@/lib/checkout/checkout-session-context";
 import "./globals.css";
 
 const oswald = localFont({
@@ -46,10 +47,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col font-outfit text-midnight-party">
         <AuthProvider>
           <CartProvider>
-            <Suspense fallback={null}>
-              <AgeVerification />
-            </Suspense>
-            {children}
+            <CheckoutSessionProvider>
+              <Suspense fallback={null}>
+                <AgeVerification />
+              </Suspense>
+              {children}
+            </CheckoutSessionProvider>
           </CartProvider>
         </AuthProvider>
       </body>

@@ -155,24 +155,25 @@ export function PartnerAvailabilityPage() {
             </div>
           ) : (
             <>
-              <div className="mt-4 grid grid-cols-7 gap-1 sm:gap-1.5">
+              <div className="mt-4 grid grid-cols-7 gap-0.5 sm:gap-1.5">
                 {WEEKDAYS.map((day) => (
                   <div
                     key={day}
-                    className="px-1 py-2 text-center font-outfit text-[10px] font-semibold uppercase tracking-wide text-midnight-party/45 sm:text-[11px]"
+                    className="px-0.5 py-1.5 text-center font-outfit text-[9px] font-semibold uppercase tracking-wide text-midnight-party/45 sm:px-1 sm:py-2 sm:text-[11px]"
                   >
-                    {day}
+                    <span className="sm:hidden">{day.slice(0, 1)}</span>
+                    <span className="hidden sm:inline">{day}</span>
                   </div>
                 ))}
               </div>
 
-              <div className="grid grid-cols-7 gap-1 sm:gap-1.5">
+              <div className="grid grid-cols-7 gap-0.5 sm:gap-1.5">
                 {cells.map((cell, index) => {
                   if (!cell) {
                     return (
                       <div
                         key={`pad-${index}`}
-                        className="min-h-[4.25rem] rounded-xl bg-transparent sm:min-h-[5rem]"
+                        className="min-h-[2.75rem] rounded-lg bg-transparent sm:min-h-[5rem] sm:rounded-xl"
                         aria-hidden="true"
                       />
                     );
@@ -191,14 +192,14 @@ export function PartnerAvailabilityPage() {
                       key={dateKey}
                       type="button"
                       onClick={() => setSelectedDate(dateKey)}
-                      className={`flex min-h-[4.25rem] flex-col rounded-xl border px-1.5 py-1.5 text-left transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac-luster sm:min-h-[5rem] sm:px-2 sm:py-2 ${
+                      className={`flex min-h-[2.75rem] flex-col rounded-lg border px-0.5 py-1 text-left transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac-luster sm:min-h-[5rem] sm:rounded-xl sm:px-2 sm:py-2 ${
                         isSelected
                           ? "border-lilac-luster/50 bg-lilac-luster/8 shadow-[0_0_0_1px_rgba(109,0,255,0.12)]"
                           : "border-midnight-party/8 bg-[#fbf8fa] hover:border-lilac-luster/30 hover:bg-white"
                       } ${inMonth ? "" : "opacity-40"}`}
                     >
                       <span
-                        className={`inline-flex h-6 w-6 items-center justify-center rounded-full font-outfit text-[12px] font-semibold sm:h-7 sm:w-7 sm:text-[13px] ${
+                        className={`inline-flex h-5 w-5 items-center justify-center rounded-full font-outfit text-[11px] font-semibold sm:h-7 sm:w-7 sm:text-[13px] ${
                           isToday
                             ? "bg-midnight-party text-white"
                             : "text-midnight-party"
@@ -207,17 +208,17 @@ export function PartnerAvailabilityPage() {
                         {cell.getDate()}
                       </span>
                       {markers.length > 0 ? (
-                        <span className="mt-auto flex flex-wrap gap-0.5 pt-1">
+                        <span className="mt-auto flex flex-wrap gap-0.5 pt-0.5 sm:pt-1">
                           {markers.map((marker) => (
                             <span
                               key={marker}
                               title={markerLabel(marker)}
-                              className={`h-1.5 w-1.5 rounded-full sm:h-2 sm:w-2 ${markerDotClass(marker)}`}
+                              className={`h-1 w-1 rounded-full sm:h-2 sm:w-2 ${markerDotClass(marker)}`}
                             />
                           ))}
                         </span>
                       ) : (
-                        <span className="mt-auto pt-1" />
+                        <span className="mt-auto pt-0.5 sm:pt-1" />
                       )}
                     </button>
                   );

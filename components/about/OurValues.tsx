@@ -71,13 +71,7 @@ export function OurValues() {
                     <span className="font-outfit text-[10px] font-semibold uppercase tracking-[0.2em] opacity-70">
                       0{index + 1}
                     </span>
-                    <h3
-                      className={
-                        value.id === "dependability"
-                          ? "mt-3 max-w-full whitespace-nowrap font-oswald text-3xl font-bold uppercase leading-none tracking-tight xl:text-[1.85rem] xl:tracking-[-0.02em]"
-                          : "mt-3 font-oswald text-3xl font-bold uppercase leading-none tracking-wide xl:text-[1.85rem]"
-                      }
-                    >
+                    <h3 className="mt-3 font-oswald text-[clamp(1.65rem,4vw,1.85rem)] font-bold uppercase leading-none tracking-tight xl:text-[1.85rem]">
                       {value.title}
                     </h3>
                     <p className="mt-4 font-outfit text-sm leading-relaxed opacity-90 sm:text-base xl:text-sm">

@@ -16,14 +16,14 @@ export function BestSellersSection() {
 
       <div className="relative mx-auto max-w-7xl">
         <Reveal>
-          <div className="mb-8 flex items-end justify-between gap-4">
+          <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
             <h2
               id="bestsellers-heading"
               className="font-oswald text-3xl font-bold uppercase tracking-wide text-midnight-party sm:text-4xl lg:text-5xl"
             >
               Best Sellers
             </h2>
-            <SeeAllLink href="/catalogue" label="Shop All" className="mb-1 shrink-0" />
+            <SeeAllLink href="/catalogue" label="Shop All" className="self-start sm:mb-1 sm:shrink-0" />
           </div>
         </Reveal>
 

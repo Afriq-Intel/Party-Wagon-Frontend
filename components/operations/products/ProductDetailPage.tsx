@@ -827,8 +827,9 @@ export function ProductDetailPage({
               ) : null}
             </div>
           ) : (
-          <div className="overflow-x-auto rounded-xl border border-black/5">
-            <table className="min-w-[860px] w-full border-collapse text-left">
+          <>
+          <div className="hidden overflow-x-auto rounded-xl border border-black/5 lg:block">
+            <table className="min-w-full w-full border-collapse text-left">
               <thead>
                 <tr className="border-b border-black/5 bg-[#fbf8fa]">
                   {[
@@ -1008,6 +1009,146 @@ export function ProductDetailPage({
               </tbody>
             </table>
           </div>
+
+          <ul className="divide-y divide-black/5 overflow-hidden rounded-xl border border-black/5 lg:hidden">
+            {(isEditable ? draft.variants : product!.variants).map((variant) => {
+              const editing = isEditable && editingVariantId === variant.id;
+              return (
+                <li key={variant.id} className="space-y-3 bg-white p-4">
+                  {editing ? (
+                    <>
+                      <input
+                        value={variant.label}
+                        onChange={(event) =>
+                          updateVariant(variant.id, {
+                            label: event.target.value,
+                          })
+                        }
+                        placeholder="Name / Size"
+                        className={fieldClass}
+                      />
+                      <input
+                        value={variant.sku}
+                        onChange={(event) =>
+                          updateVariant(variant.id, {
+                            sku: event.target.value,
+                          })
+                        }
+                        placeholder="SKU"
+                        className={fieldClass}
+                      />
+                      <div className="grid grid-cols-2 gap-2">
+                        <input
+                          type="number"
+                          min={1}
+                          value={variant.packSize}
+                          onChange={(event) =>
+                            updateVariant(variant.id, {
+                              packSize: Number(event.target.value) || 1,
+                            })
+                          }
+                          className={fieldClass}
+                          aria-label="Pack size"
+                        />
+                        <select
+                          value={variant.uom}
+                          onChange={(event) =>
+                            updateVariant(variant.id, {
+                              uom: event.target.value as OperationsProductUom,
+                            })
+                          }
+                          className={fieldClass}
+                          aria-label="Unit of measure"
+                        >
+                          {OPERATIONS_PRODUCT_UOMS.map((entry) => (
+                            <option key={entry} value={entry}>
+                              {OPERATIONS_PRODUCT_UOM_LABELS[entry]}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2">
+                        <input
+                          type="number"
+                          min={0}
+                          step="0.01"
+                          value={variant.priceGhs}
+                          onChange={(event) =>
+                            updateVariant(variant.id, {
+                              priceGhs: Number(event.target.value) || 0,
+                            })
+                          }
+                          className={fieldClass}
+                          aria-label="Price"
+                        />
+                        <select
+                          value={variant.status}
+                          onChange={(event) =>
+                            updateVariant(variant.id, {
+                              status: event.target
+                                .value as OperationsProductStatus,
+                            })
+                          }
+                          className={fieldClass}
+                          aria-label="Status"
+                        >
+                          {OPERATIONS_PRODUCT_STATUSES.map((entry) => (
+                            <option key={entry} value={entry}>
+                              {productStatusLabel(entry)}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="font-outfit text-[14px] font-semibold text-midnight-party">
+                            {variant.label}
+                          </p>
+                          <p className="mt-0.5 font-outfit text-[12px] text-midnight-party/50">
+                            {variant.sku}
+                          </p>
+                        </div>
+                        <ProductStatusBadge status={variant.status} />
+                      </div>
+                      <p className="font-outfit text-[13px] text-midnight-party/70">
+                        {variant.packSize} {OPERATIONS_PRODUCT_UOM_LABELS[variant.uom]}
+                        <span className="mx-1.5 text-midnight-party/25">·</span>
+                        <span className="font-semibold text-midnight-party">
+                          {formatOperationsPrice(variant.priceGhs)}
+                        </span>
+                      </p>
+                    </>
+                  )}
+                  {isEditable ? (
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setEditingVariantId(editing ? null : variant.id)
+                        }
+                        className="rounded-lg border border-midnight-party/10 px-3 py-1.5 font-outfit text-[12px] font-semibold text-midnight-party transition hover:border-lilac-luster/40 hover:text-lilac-luster"
+                      >
+                        {editing ? "Done" : "Edit"}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => removeVariant(variant.id)}
+                        className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-radiant-rose transition hover:bg-radiant-rose/8"
+                        title="Remove variant"
+                      >
+                        <Trash2 size={14} aria-hidden="true" />
+                        <span className="sr-only">Remove variant</span>
+                      </button>
+                    </div>
+                  ) : null}
+                </li>
+              );
+            })}
+          </ul>
+          </>
           )}
         </SectionCard>
 

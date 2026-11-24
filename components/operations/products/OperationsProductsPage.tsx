@@ -498,8 +498,8 @@ export function OperationsProductsPage() {
           </div>
         ) : (
           <>
-            <div className="overflow-x-auto">
-              <table className="min-w-[920px] w-full border-collapse text-left">
+            <div className="hidden overflow-x-auto lg:block">
+              <table className="min-w-full w-full border-collapse text-left">
                 <thead>
                   <tr className="border-b border-black/5 bg-[#fbf8fa]">
                     {[
@@ -584,6 +584,58 @@ export function OperationsProductsPage() {
                 </tbody>
               </table>
             </div>
+
+            <ul className="divide-y divide-black/5 lg:hidden">
+              {paged.items.map((product) => (
+                <li key={product.id} className="p-4">
+                  <div className="flex items-start gap-3">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        router.push(`/operations/products/${product.id}`)
+                      }
+                      className="flex min-w-0 flex-1 items-start gap-3 text-left"
+                    >
+                      <span className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-offwhite">
+                        <ProductImageThumb src={product.image} size={56} />
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block font-outfit text-[14px] font-semibold text-midnight-party">
+                          {product.name}
+                        </span>
+                        <span className="mt-0.5 block font-outfit text-[12px] text-midnight-party/50">
+                          {product.category} · {product.sku}
+                        </span>
+                        <span className="mt-2 block font-outfit text-[13px] font-semibold text-midnight-party">
+                          {formatOperationsPrice(product.priceGhs)}
+                          <span className="ml-2 font-normal text-midnight-party/50">
+                            {product.variantsCount} variants
+                          </span>
+                        </span>
+                        <span className="mt-2 inline-flex">
+                          <ProductStatusBadge status={product.status} />
+                        </span>
+                      </span>
+                    </button>
+                    <ProductActionsMenu
+                      product={product}
+                      onChangeStatus={() =>
+                        setDialog({
+                          type: "status",
+                          productId: product.id,
+                        })
+                      }
+                      onDelete={() =>
+                        setDialog({
+                          type: "delete",
+                          productId: product.id,
+                        })
+                      }
+                    />
+                  </div>
+                </li>
+              ))}
+            </ul>
 
             <div className="flex flex-col gap-3 border-t border-black/5 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-5">
               <p className="font-outfit text-[12.5px] text-midnight-party/55">

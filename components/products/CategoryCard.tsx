@@ -10,7 +10,7 @@ export function CategoryCard({ category }: CategoryCardProps) {
   return (
     <Link
       href={`/catalogue?category=${category.slug}`}
-      className="group flex w-[152px] shrink-0 flex-col items-center justify-center gap-3 rounded-2xl border border-black/10 bg-white px-4 py-7 transition duration-300 hover:-translate-y-1 hover:border-lilac-luster/45 hover:shadow-[5px_5px_0_0_rgba(109,0,255,0.18)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac-luster sm:w-[172px] sm:py-8"
+      className="group flex w-[136px] shrink-0 flex-col items-center justify-center gap-3 rounded-2xl border border-black/10 bg-white px-3 py-6 transition duration-300 hover:-translate-y-1 hover:border-lilac-luster/45 hover:shadow-[5px_5px_0_0_rgba(109,0,255,0.18)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac-luster sm:w-[172px] sm:px-4 sm:py-8"
     >
       <div className="relative flex h-14 w-14 items-center justify-center sm:h-16 sm:w-16">
         <span

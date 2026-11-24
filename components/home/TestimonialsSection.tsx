@@ -25,14 +25,14 @@ export function TestimonialsSection() {
     >
       <div className="mx-auto max-w-7xl">
         <Reveal>
-          <div className="mb-8 flex items-end justify-between gap-4">
+          <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <h2
               id="testimonials-heading"
-              className="font-oswald text-3xl font-bold text-midnight-party sm:text-4xl"
+              className="max-w-[14ch] font-oswald text-3xl font-bold text-midnight-party sm:max-w-none sm:text-4xl"
             >
               Hear from our customers
             </h2>
-            <div className="flex shrink-0 items-center gap-2">
+            <div className="flex shrink-0 items-center gap-2 self-end sm:self-auto">
               <button
                 type="button"
                 onClick={() => scrollByCard("prev")}
